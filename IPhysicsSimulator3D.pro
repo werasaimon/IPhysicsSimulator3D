@@ -12,6 +12,8 @@ INCLUDEPATH += /usr/local/include
 CONFIG += resources_big
 DEFINES += ENABLE_STL_SUPPORT
 
+; git commit --author="Имя Автора <email@domain.com>" -m "Ваш комментарий к коммиту"
+
 
 #Linux
 linux: {
