@@ -12,9 +12,6 @@ INCLUDEPATH += /usr/local/include
 CONFIG += resources_big
 DEFINES += ENABLE_STL_SUPPORT
 
-; git commit --author="Имя Автора <email@domain.com>" -m "Ваш комментарий к коммиту"
-
-
 #Linux
 linux: {
 
@@ -53,8 +50,6 @@ INCLUDEPATH += $$PWD/IEngine
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ActuatorDynamic.cpp \
-    ActuatorHardware.cpp \
     HingeMountTwoAxis.cpp \
     IEngine/ICommon/IColor.cpp \
     IEngine/IGeometry/IAABBox3D.cpp \
@@ -181,20 +176,14 @@ SOURCES += \
     OpenGL_Render_Interface.cpp \
     Sensors/IEncoderSensor.cpp \
     Sensors/IOrientationSensor.cpp \
-    TripodeDynamic.cpp \
-    TripodeHardware.cpp \
     chart_widget.cpp \
     glwidget.cpp \
-    glwidget_actuator.cpp \
     glwidget_quadrocopter.cpp \
-    glwidget_turel.cpp \
     main.cpp \
     mainwindow.cpp \
 
 
 HEADERS += \
-    ActuatorDynamic.h \
-    ActuatorHardware.h \
     HingeMountTwoAxis.h \
     IEngine/ICommon/IBernsteinPolynomial.h \
     IEngine/ICommon/IBezierPatch.h \
@@ -371,13 +360,9 @@ HEADERS += \
     Sensors/IEncoderSensor.h \
     Sensors/IOrientationSensor.h \
     Sensors/ISensors.hpp \
-    TripodeDynamic.h \
-    TripodeHardware.h \
     chart_widget.h \
     glwidget.h \
-    glwidget_actuator.h \
     glwidget_quadrocopter.h \
-    glwidget_turel.h \
     mainwindow.h \
 
 

@@ -13,14 +13,10 @@
 #include <QObject>
 #include <QWidget>
 
-
 #include <IEngine/reactphysics3d/reactphysics3d.h>
 #include <IEngineComponent/IComponents.hpp>
 #include <IEngineComponent/IScene.h>
 #include <Sensors/ISensors.hpp>
-
-#include <ActuatorDynamic.h>
-
 
 using namespace IEngine;
 using namespace IMath;

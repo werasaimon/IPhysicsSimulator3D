@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Simulation Physics N3_Davinchi");
+    this->setWindowTitle("Simulation Physics Quadrocopters");
 
 
     time = 0;
