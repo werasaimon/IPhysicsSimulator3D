@@ -28,6 +28,8 @@ public:
 
      void update_timer();
 
+     void on_pushButton_Simulate_clicked();
+
  private:
 
      Ui::MainWindow *ui;

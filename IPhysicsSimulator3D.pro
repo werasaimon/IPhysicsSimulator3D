@@ -5,9 +5,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 #QMAKE_CXXFLAGS += -m32
 
-LIBS += -L/usr/local/lib -lSDL2
-LIBS += -L/usr/local/lib -lSDL2 -ldl -lpthread
-INCLUDEPATH += /usr/local/include
+# LIBS += -L/usr/local/lib -lSDL2
+# LIBS += -L/usr/local/lib -lSDL2 -ldl -lpthread
+# INCLUDEPATH += /usr/local/include
 
 CONFIG += resources_big
 DEFINES += ENABLE_STL_SUPPORT
@@ -175,6 +175,7 @@ SOURCES += \
     OpenGL_Render_Interface.cpp \
     Sensors/IEncoderSensor.cpp \
     Sensors/IOrientationSensor.cpp \
+    Sensors/IVirtualOrientationSensor.cpp \
     chart_widget.cpp \
     glwidget.cpp \
     glwidget_quadrocopter.cpp \
@@ -358,6 +359,7 @@ HEADERS += \
     Sensors/IEncoderSensor.h \
     Sensors/IOrientationSensor.h \
     Sensors/ISensors.hpp \
+    Sensors/IVirtualOrientationSensor.h \
     chart_widget.h \
     glwidget.h \
     glwidget_quadrocopter.h \

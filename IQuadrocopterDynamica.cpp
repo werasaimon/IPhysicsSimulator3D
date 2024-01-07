@@ -16,21 +16,67 @@ void IQuadrocopterDynamica::Init(GLWidget *_globalScene_)
     //---------------------------------------------------------------------//
 
     Vector3 pos = Vector3(0,10,0);
-    mDynamicPoints[0] = Vector3(-10, 0,-10) * 0.5f;
-    mDynamicPoints[1] = Vector3( 10, 0,-10) * 0.5f;
-    mDynamicPoints[2] = Vector3( 10, 0, 10) * 0.5f;
-    mDynamicPoints[3] = Vector3(-10, 0, 10) * 0.5f;
+    mDynamicPoints[0] = Vector3(-10, 0,-10) * 0.95f;
+    mDynamicPoints[1] = Vector3( 10, 0,-10) * 0.95f;
+    mDynamicPoints[2] = Vector3( 10, 0, 10) * 0.95f;
+    mDynamicPoints[3] = Vector3(-10, 0, 10) * 0.95f;
 
-    Vector3 extendet(10,1,10);
+
     Transform base_trans(pos);
     mRigidBody_Base = new IComponentRigidBody(base_trans,_physics__world_);
-    auto  collider_base =mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(extendet));
-    mRigidBody_Base->InitTypePhysics(rp3d::BodyType::DYNAMIC);
 
+    //-- geometry for physics --//
+    Vector3 extendet(5,1,5);
     MeshGenerator::CuboidDescriptor desc_base(extendet);
     IComponentMesh *base_mesh = new IComponentMesh(desc_base);
+    auto  collider_base = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(extendet));
     base_mesh->setCollider(collider_base);
     _scene_->AddComponent( base_mesh );
+
+
+    Vector3 Volume_0(mDynamicPoints[0].Length(),1,1);
+    MeshGenerator::CuboidDescriptor desc_shoulder_0(Volume_0);
+    IComponentMesh *shoulder_mesh_0 = new IComponentMesh(desc_shoulder_0);
+    Transform transform_shoulder_0(mDynamicPoints[0] / 2.f, Quaternion::FromAngleAxis(Vector3::Y,IMath::IDegreesToRadians(-45.f)));
+    shoulder_mesh_0->SetTransform(transform_shoulder_0);
+    auto collider_shoulder_0 = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(Volume_0),transform_shoulder_0);
+    shoulder_mesh_0->setCollider(collider_shoulder_0);
+    _scene_->AddComponent( shoulder_mesh_0 );
+
+
+    Vector3 Volume_1(mDynamicPoints[1].Length(),1,1);
+    MeshGenerator::CuboidDescriptor desc_shoulder_1(Volume_1);
+    IComponentMesh *shoulder_mesh_1 = new IComponentMesh(desc_shoulder_1);
+    Transform transform_shoulder_1(mDynamicPoints[1]/ 2.f , Quaternion::FromAngleAxis(Vector3::Y,IMath::IDegreesToRadians(45.f)));
+    shoulder_mesh_1->SetTransform(transform_shoulder_1);
+    auto collider_shoulder_1 = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(Volume_1),transform_shoulder_1);
+    shoulder_mesh_1->setCollider(collider_shoulder_1);
+    _scene_->AddComponent( shoulder_mesh_1 );
+
+
+    Vector3 Volume_2(mDynamicPoints[2].Length(),1,1);
+    MeshGenerator::CuboidDescriptor desc_shoulder_2(Volume_2);
+    IComponentMesh *shoulder_mesh_2 = new IComponentMesh(desc_shoulder_2);
+    Transform transform_shoulder_2(mDynamicPoints[2]/ 2.f , Quaternion::FromAngleAxis(Vector3::Y,IMath::IDegreesToRadians(-45.f)));
+    shoulder_mesh_2->SetTransform(transform_shoulder_2);
+    auto collider_shoulder_2 = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(Volume_2),transform_shoulder_2);
+    shoulder_mesh_2->setCollider(collider_shoulder_2);
+    _scene_->AddComponent( shoulder_mesh_2 );
+
+
+    Vector3 Volume_3(mDynamicPoints[3].Length(),1,1);
+    MeshGenerator::CuboidDescriptor desc_shoulder_3(Volume_3);
+    IComponentMesh *shoulder_mesh_3 = new IComponentMesh(desc_shoulder_3);
+    Transform transform_shoulder_3(mDynamicPoints[3]/ 2.f , Quaternion::FromAngleAxis(Vector3::Y,IMath::IDegreesToRadians(45.f)));
+    shoulder_mesh_3->SetTransform(transform_shoulder_3);
+    auto collider_shoulder_3 = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(Volume_3),transform_shoulder_3);
+    shoulder_mesh_3->setCollider(collider_shoulder_3);
+    _scene_->AddComponent( shoulder_mesh_3 );
+
+    //---//
+
+     mRigidBody_Base->InitTypePhysics(rp3d::BodyType::DYNAMIC);
+
 
     //---------------------------------------------------------------------//
 
@@ -42,11 +88,18 @@ void IQuadrocopterDynamica::Init(GLWidget *_globalScene_)
 
 void IQuadrocopterDynamica::RenderDebug()
 {
-    draw_sphere(mRigidBody_Base->GetTransform() * mDynamicPoints[0] , 0.5f , Vector3(1,0,0));
-    draw_sphere(mRigidBody_Base->GetTransform() * mDynamicPoints[1] , 0.5f , Vector3(0,1,0));
-    draw_sphere(mRigidBody_Base->GetTransform() * mDynamicPoints[2] , 0.5f , Vector3(0,0,1));
-    draw_sphere(mRigidBody_Base->GetTransform() * mDynamicPoints[3] , 0.5f , Vector3(1,1,0));
+    auto transform = mRigidBody_Base->GetTransform();
 
+    draw_sphere(transform * mDynamicPoints[0] , 0.5f , Vector3(1,0,0));
+    draw_sphere(transform * mDynamicPoints[1] , 0.5f , Vector3(0,1,0));
+    draw_sphere(transform * mDynamicPoints[2] , 0.5f , Vector3(0,0,1));
+    draw_sphere(transform * mDynamicPoints[3] , 0.5f , Vector3(1,1,0));
+
+    scalar size = 4;
+    draw_line(transform * mDynamicPoints[0], transform * mDynamicPoints[0] + Vector3::Y * size * m_W[0], Vector3(1,0,0));
+    draw_line(transform * mDynamicPoints[1], transform * mDynamicPoints[1] + Vector3::Y * size * m_W[1], Vector3(0,1,0));
+    draw_line(transform * mDynamicPoints[2], transform * mDynamicPoints[2] + Vector3::Y * size * m_W[2], Vector3(0,0,1));
+    draw_line(transform * mDynamicPoints[3], transform * mDynamicPoints[3] + Vector3::Y * size * m_W[3], Vector3(1,1,0));
 
     Vector3 position = mRigidBody_Base->GetTransform().GetPosition();
     draw_sphere(position , 0.75f , Vector3(1,1,1));
@@ -79,7 +132,7 @@ void IQuadrocopterDynamica::UpdateStabilizationHeight(Vector3 &F, const scalar &
 
     Vector3 linear_vel = mRigidBody_Base->GetLinearVelocity();
     scalar  massa = mRigidBody_Base->GetMassa();
-    scalar  gravity = 0;//30.f * _time_step;
+    scalar  gravity = 30.f * _time_step;
 
     scalar barometric_altitude = mSensor->BarometricAltitude();
 
@@ -213,7 +266,7 @@ void IQuadrocopterDynamica::UpdateStabilizationFreeControl(float _time_step)
     m_W[2] = ISqrt(F/4*k + Moment.z/2*k*l - Moment.y/4*b) * speed_length;
     m_W[3] = ISqrt(F/4*k + Moment.x/2*k*l + Moment.y/4*b) * speed_length;
 
-    //std::cout << m_W[0] << " " << m_W[1] << " " << m_W[2] << " " << m_W[0] << std::endl;
+    std::cout << m_W[0] << " " << m_W[1] << " " << m_W[2] << " " << m_W[0] << std::endl;
 }
 
 void IQuadrocopterDynamica::UpdateStabilizationControlHeight(scalar expected_height, float _time_step)
@@ -276,7 +329,7 @@ void IQuadrocopterDynamica::UpdateStabilizationControlPosition(const Vector3 &ex
     //    m_PhysicsBody->ApplyImpulse( Q * Vector3::Y * m_W[2] , P - Q * Vector3::X * m_Lenght);
     //    m_PhysicsBody->ApplyImpulse( Q * Vector3::Y * m_W[3] , P - Q * Vector3::Z * m_Lenght);
 
-    //    std::cout << m_W[0] << " " << m_W[1] << " " << m_W[2] << " " << m_W[3] << std::endl;
+        std::cout << m_W[0] << " " << m_W[1] << " " << m_W[2] << " " << m_W[3] << std::endl;
 }
 
 //========================================================================================================//
@@ -299,6 +352,11 @@ Vector3 IQuadrocopterDynamica::Forward() const
 Vector3 IQuadrocopterDynamica::Left() const
 {
     return m_Left;
+}
+
+IVirtualOrientationSensor *IQuadrocopterDynamica::Sensor() const
+{
+    return mSensor;
 }
 
 
