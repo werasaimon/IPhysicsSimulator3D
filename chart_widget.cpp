@@ -3,10 +3,17 @@
 
 
 Chart_Widget::Chart_Widget(QWidget *parent)
-    : QWidget(parent)
+    : QChartView(parent)
 {
+    this->setRenderHint(QPainter::Antialiasing);
+    this->setRubberBand(QChartView::VerticalRubberBand);
     // Создаем QChart и устанавливаем данные
     m_Chart = new QChart();
+
+    // Включаем антиалиасинг для сглаживания
+    m_Chart->setTheme(QChart::ChartThemeDark);
+    m_Chart->setDropShadowEnabled(true);
+
 
     m_Series1 = new QLineSeries(this);
     m_Series2 = new QLineSeries(this);
@@ -15,10 +22,11 @@ Chart_Widget::Chart_Widget(QWidget *parent)
     m_Chart->addSeries(m_Series1);
     m_Chart->addSeries(m_Series2);
     m_Chart->addSeries(m_Series3);
-    m_Chart->setTitle("axis angle-X-Y-Z rotate sensor");
+  //  m_Chart->setTitle("axis angle-X-Y-Z rotate sensor");
+
     m_Chart->createDefaultAxes();
     m_Chart->axes(Qt::Horizontal).first()->setRange(0, max_plot_length=2000);
-    m_Chart->axes(Qt::Vertical).first()->setRange(-45, 45);
+    m_Chart->axes(Qt::Vertical).first()->setRange(-180, 180);
 
 
     QPen pen1 = m_Series1->pen();
@@ -38,9 +46,10 @@ Chart_Widget::Chart_Widget(QWidget *parent)
     pen3.setBrush(QBrush("blue")); // or just pen.setColor("blue");
     m_Series3->setPen(pen3);
 
+    this->setChart(m_Chart);
 
-    // Создаем QChartView и устанавливаем QChart
-    QChartView *chartView = new QChartView(m_Chart);
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->addWidget(chartView);
+    // // Создаем QChartView и устанавливаем QChart
+    // QChartView *chartView = new QChartView(m_Chart);
+    // QVBoxLayout *layout = new QVBoxLayout(this);
+    // layout->addWidget(chartView);
 }

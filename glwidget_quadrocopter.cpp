@@ -1,5 +1,6 @@
 #include "glwidget_quadrocopter.h"
 #include <GL/freeglut.h>
+#include <QThread>
 
 GLWidget_Quadrocopter::GLWidget_Quadrocopter(QWidget *parent)
 : GLWidget(parent)
@@ -63,12 +64,33 @@ void GLWidget_Quadrocopter::update_scene()
 
         if(m_QuadroDynamica)
         {
-            if(mKeys[Qt::Key_U]) m_PositionStability += Vector3::Y * 0.1f;
-            if(mKeys[Qt::Key_I]) m_PositionStability -= Vector3::Z * 0.1f;
-            if(mKeys[Qt::Key_J]) m_PositionStability += Vector3::X;
-            if(mKeys[Qt::Key_K]) m_PositionStability -= Vector3::X;
+            if(mKeys[Qt::Key_W]) m_PositionStability += Vector3::Z * 0.1f;
+            if(mKeys[Qt::Key_S]) m_PositionStability -= Vector3::Z * 0.1f;
+            if(mKeys[Qt::Key_A]) m_PositionStability += Vector3::X * 0.1f;
+            if(mKeys[Qt::Key_D]) m_PositionStability -= Vector3::X * 0.1f;
         }
     }
+
+
+
+    float coff_speed = 0.01;
+    if(mKeys[Qt::Key_W])
+    {
+        m_CCamera->setEye(m_CCamera->Eye() + Vector3::Z * coff_speed);
+    }
+
+    if(mKeys[Qt::Key_S])
+    {
+        m_CCamera->setEye(m_CCamera->Eye() - Vector3::Z * coff_speed);
+    }
+
+    if(mKeys[Qt::Key_P])
+    {
+        m_CScene->Descriptor().m_IsDynamics = !m_CScene->Descriptor().m_IsDynamics;
+        QThread::msleep(10);
+    }
+
+
 }
 
 
@@ -80,7 +102,9 @@ void GLWidget_Quadrocopter::paintGL()
     glTranslatef(m_PositionStability.x,
                  m_PositionStability.y,
                  m_PositionStability.z);
-    glutSolidSphere(1.1, 20, 20);
+    glColor3f(1,0,0);
+    glutSolidSphere(0.5, 20, 20);
+    glColor3f(1,1,1);
     glPopMatrix();
 
     if(m_QuadroDynamica)
@@ -101,4 +125,9 @@ void GLWidget_Quadrocopter::keyReleaseEvent(QKeyEvent *keyEvent)
 {
     GLWidget::keyReleaseEvent(keyEvent);
     keyEvent->accept();
+}
+
+IQuadrocopterDynamica *GLWidget_Quadrocopter::QuadroDynamica() const
+{
+    return m_QuadroDynamica;
 }

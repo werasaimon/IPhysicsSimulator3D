@@ -21,9 +21,11 @@ public:
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
 
+    IQuadrocopterDynamica *QuadroDynamica() const;
 
-
-
+    void start_simulate() { m_CScene->Descriptor().m_IsDynamics = true; }
+    void stop_simulate() { m_CScene->Descriptor().m_IsDynamics = false; }
+    bool is_simulate() const { return m_CScene->Descriptor().m_IsDynamics; }
 
 private:
 

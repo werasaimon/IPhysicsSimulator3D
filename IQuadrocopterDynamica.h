@@ -4,54 +4,10 @@
 #include <QObject>
 #include <Sensors/ISensors.hpp>
 #include "OpenGL_Render_Interface.h"
-
-
-class IVirtualOrientationSensor
-{
-    scalar m_TimeStep;
-    rp3d::RigidBody *m_PhysicsBody;
-
-
-public:
-
-    IVirtualOrientationSensor(rp3d::RigidBody *_PhysicsBody=nullptr , scalar _time_step=1.0)
-        : m_TimeStep(_time_step) ,
-        m_PhysicsBody(_PhysicsBody)
-    {
-        assert(m_PhysicsBody);
-    }
-
-    Quaternion Rotation() const
-    {
-        return converAddaptive(m_PhysicsBody->getTransform()).GetRotation();
-    }
-
-    Vector3 AccelerometerAngle( const Quaternion& desired_correction_value_tau = Quaternion::IDENTITY) const
-    {
-        return  (converAddaptive(m_PhysicsBody->getTransform()).GetRotation() *
-                 desired_correction_value_tau).GetEulerAngles2();
-    }
-
-    Vector3 GyroscopeAngle( const Quaternion& desired_correction_value_tau = Quaternion::IDENTITY) const
-    {
-        return (converAddaptive(m_PhysicsBody->getTransform()).GetRotation() * desired_correction_value_tau) *
-                converAddaptive(m_PhysicsBody->getAngularVelocity()) * m_TimeStep;
-    }
-
-    scalar BarometricAltitude() const
-    {
-        return converAddaptive(m_PhysicsBody->getTransform()).GetPosition().Dot(Vector3::Y);
-    }
-
-    void setTimeStep(const scalar &TimeStep)
-    {
-        m_TimeStep = TimeStep;
-    }
-};
+#include "Sensors/IVirtualOrientationSensor.h"
 
 
 class GLWidget;
-
 class IQuadrocopterDynamica : public OpenGL_Render_Interface
 {
 public:
@@ -92,6 +48,9 @@ public:
     Vector3 Forward() const;
     Vector3 Left() const;
 
+    //--------------------------------------------------------------------------//
+
+    IVirtualOrientationSensor *Sensor() const;
 
 private:
 
