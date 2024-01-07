@@ -105,6 +105,10 @@ class RigidBody : public CollisionBody {
         /// Return the local inertia tensor of the body (in body coordinates)
         const Vector3& getLocalInertiaTensor() const;
 
+
+        Matrix3x3 GetInertiaTensorInverseWorld() const;
+
+
         /// Set the local inertia tensor of the body (in body coordinates)
         void setLocalInertiaTensor(const Vector3& inertiaTensorLocal);
 

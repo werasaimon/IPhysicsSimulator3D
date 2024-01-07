@@ -18,7 +18,7 @@ void IComponentRigidBody::InitTypePhysics(const reactphysics3d::BodyType& type)
     m_PhysRigidBody->setType(type);
 }
 
-rp3d::RigidBody *IComponentRigidBody::PhysRigidBody() const
+rp3d::RigidBody *IComponentRigidBody::PhysRigidBody() //const
 {
     return m_PhysRigidBody;
 }

@@ -239,6 +239,15 @@ const Vector3& RigidBody::getLocalInertiaTensor() const {
     return mWorld.mRigidBodyComponents.getLocalInertiaTensor(mEntity);
 }
 
+Matrix3x3 RigidBody::GetInertiaTensorInverseWorld() const
+{
+    Matrix3x3 InertiaTensorInverseWorld;
+    auto transform  = mWorld.mTransformComponents.getTransform(mEntity);
+    computeWorldInertiaTensorInverse(transform.getOrientation().getMatrix(),getLocalInertiaTensor(),InertiaTensorInverseWorld);
+    return InertiaTensorInverseWorld;
+}
+
+
 // Set the local inertia tensor of the body (in local-space coordinates)
 /// Note that an inertia tensor with a zero value on its diagonal is interpreted as infinite inertia.
 /**

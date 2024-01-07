@@ -14,7 +14,7 @@ public:
 
     void InitTypePhysics(const reactphysics3d::BodyType &type);
 
-    rp3d::RigidBody *PhysRigidBody() const;
+    rp3d::RigidBody *PhysRigidBody();// const;
     rp3d::Collider *AddCollider(rp3d::CollisionShape* collisionShape, const Transform& transform = Transform::Identity());
 
     rp3d::Collider *AddCollider2(rp3d::CollisionShape* collisionShape, IComponentObject2 *object, const Transform* transform = nullptr)
@@ -51,7 +51,7 @@ public:
     }
 
 
-    Vector3 getForce() const
+    Vector3 GetForce() const
     {
         return converAddaptive(m_PhysRigidBody->getForce());
     }
@@ -60,10 +60,73 @@ public:
     /**
  * @return The total manually applied torque on the body (in world-space)
  */
-    Vector3 getTorque() const
+    Vector3 GetTorque() const
     {
         return converAddaptive(m_PhysRigidBody->getTorque());
     }
+
+
+    scalar GetMassa() const
+    {
+        return m_PhysRigidBody->getMass();
+    }
+
+    //-----------------------------------------------------------------//
+
+    void setLinearVelocity(const Vector3& _linearVelocity)
+    {
+        m_PhysRigidBody->setLinearVelocity(converAddaptive(_linearVelocity));
+    }
+
+    void setAngularVelocity(const Vector3& _angularVelocity)
+    {
+        m_PhysRigidBody->setAngularVelocity(converAddaptive(_angularVelocity));
+    }
+
+    //-----------------------------------------------------------------//
+
+
+    void applyLocalForceAtCenterOfMass(const Vector3& _force)
+    {
+        m_PhysRigidBody->applyLocalForceAtCenterOfMass(converAddaptive(_force));
+    }
+
+    void applyWorldForceAtCenterOfMass(const Vector3& _force)
+    {
+       m_PhysRigidBody->applyWorldForceAtCenterOfMass(converAddaptive(_force));
+    }
+
+    void applyLocalForceAtWorldPosition(const Vector3& _force, const Vector3& _point)
+    {
+        m_PhysRigidBody->applyLocalForceAtWorldPosition(converAddaptive(_force), converAddaptive(_point));
+    }
+
+    void applyWorldForceAtWorldPosition(const Vector3& _force, const Vector3& _point)
+    {
+        m_PhysRigidBody->applyWorldForceAtWorldPosition(converAddaptive(_force), converAddaptive(_point));
+    }
+
+    void applyWorldTorque(const Vector3& _torque)
+    {
+        m_PhysRigidBody->applyWorldTorque(converAddaptive(_torque));
+    }
+
+
+    void applyLocalTorque(const Vector3& _torque)
+    {
+        m_PhysRigidBody->applyLocalTorque(converAddaptive(_torque));
+    }
+
+    void ApplyImpulseAngular(const Vector3 &impuls)
+    {
+        // Awake the body if it was sleeping
+        m_PhysRigidBody->setAngularVelocity(
+            m_PhysRigidBody->getAngularVelocity() +
+            m_PhysRigidBody->GetInertiaTensorInverseWorld() * converAddaptive(impuls) );
+
+    }
+
+    //-----------------------------------------------------------------//
 
 
 //    void Setup()

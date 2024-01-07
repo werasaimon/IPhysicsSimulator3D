@@ -50,7 +50,6 @@ INCLUDEPATH += $$PWD/IEngine
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    HingeMountTwoAxis.cpp \
     IEngine/ICommon/IColor.cpp \
     IEngine/IGeometry/IAABBox3D.cpp \
     IEngine/IGeometry/ILight.cpp \
@@ -170,7 +169,7 @@ SOURCES += \
     IEngineComponent/IPhysicsCommon.cpp \
     IEngineComponent/IPhysicsWorld.cpp \
     IEngineComponent/IScene.cpp \
-    IQuadroCopterDynamica.cpp \
+    IQuadrocopterDynamica.cpp \
     OpenGL/OpenGLRender.cpp \
     OpenGL/geometry_opengl.cpp \
     OpenGL_Render_Interface.cpp \
@@ -184,7 +183,6 @@ SOURCES += \
 
 
 HEADERS += \
-    HingeMountTwoAxis.h \
     IEngine/ICommon/IBernsteinPolynomial.h \
     IEngine/ICommon/IBezierPatch.h \
     IEngine/ICommon/IColor.h \
@@ -353,7 +351,7 @@ HEADERS += \
     IEngineComponent/IPhysicsCommon.h \
     IEngineComponent/IPhysicsWorld.h \
     IEngineComponent/IScene.h \
-    IQuadroCopterDynamica.h \
+    IQuadrocopterDynamica.h \
     OpenGL/OpenGLRender.h \
     OpenGL/geometry_opengl.h \
     OpenGL_Render_Interface.h \

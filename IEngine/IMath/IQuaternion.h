@@ -483,52 +483,102 @@ namespace IMath
 
 
 
-                        /// Quaternion using Euler angles
-                        SIMD_INLINE IVector3D<T> GetEulerAngles2() const
-                        {
-                            // Euler angles in radians
-                            T pitch;
-                            T yaw;
-                            T roll;
 
-                            IQuaternion<T> q(*this);
+        /// Quaternion using Euler angles
+        SIMD_INLINE IVector3D<T> GetEulerAngles2() const
+        {
+            // Euler angles in radians
+            T pitch;
+            T yaw;
+            T roll;
 
-                            T sqw = q.w * q.w;
-                            T sqx = q.v.x * q.v.x;
-                            T sqy = q.v.y * q.v.y;
-                            T sqz = q.v.z * q.v.z;
+            IQuaternion<T> q(*this);
 
-                            // If quaternion is normalised the unit is one, otherwise it is the correction factor
-                            T unit = sqx + sqy + sqz + sqw;
-                            T val = q.v.x * q.v.y + q.v.z * q.w;
+            T sqw = q.w * q.w;
+            T sqx = q.v.x * q.v.x;
+            T sqy = q.v.y * q.v.y;
+            T sqz = q.v.z * q.v.z;
 
-                            if (val > T(0.4999) * unit)                                // 0.4999f OR 0.5f - EPSILON
-                            {
-                                // Singularity at north pole
-                                pitch = 2.f * IAtan2(q.v.x, q.w);          // Yaw
-                                yaw = M_PI * 0.5f;                         // Pitch
-                                roll = 0.f;                                // Roll
-                            }
-                            else if (val < -T(0.4999) * unit)                          // -0.4999f OR -0.5f + EPSILON
-                            {
-                                // Singularity at south pole
-                                pitch = -2.f * IAtan2(q.v.x, q.w);         // Yaw
-                                yaw = -M_PI * 0.5f;                        // Pitch
-                                roll = 0.f;                                // Roll
-                            }
-                            else
-                            {
-                                pitch = IAtan2(2.f * q.v.y * q.w - 2.f * q.v.x * q.v.z,  sqx - sqy - sqz + sqw);   // Yaw
-                                yaw   = IASin(2.f * val / unit);                                                   // Pitch
-                                roll  = IAtan2(2.f * q.v.x * q.w - 2.f * q.v.y * q.v.z, -sqx + sqy - sqz + sqw);   // Roll
-                            }
+            // If quaternion is normalised the unit is one, otherwise it is the correction factor
+            T unit = sqx + sqy + sqz + sqw;
+            T val = q.v.x * q.v.y + q.v.z * q.w;
 
-        //                   pitch =  atan2(2*(v.y*v.z + w*v.x), w*w - v.x*v.x - v.y*v.y + v.z*v.z);
-        //                   yaw =  asin(-2*(v.x*v.z - w*v.y));
-        //                   roll = atan2(2*(v.x*v.y + w*v.z), w*w + v.x*v.x - v.y*v.y - v.z*v.z);
+            if (val > T(0.4999) * unit)                                // 0.4999f OR 0.5f - EPSILON
+            {
+                // Singularity at north pole
+                pitch = 2.f * IAtan2(q.v.x, q.w);          // Yaw
+                yaw = M_PI * 0.5f;                         // Pitch
+                roll = 0.f;                                // Roll
+            }
+            else if (val < -T(0.4999) * unit)                          // -0.4999f OR -0.5f + EPSILON
+            {
+                // Singularity at south pole
+                pitch = -2.f * IAtan2(q.v.x, q.w);         // Yaw
+                yaw = -M_PI * 0.5f;                        // Pitch
+                roll = 0.f;                                // Roll
+            }
+            else
+            {
+                pitch = IAtan2(2.f * q.v.y * q.w - 2.f * q.v.x * q.v.z,  sqx - sqy - sqz + sqw);   // Yaw
+                yaw   = IASin(2.f * val / unit);                                                   // Pitch
+                roll  = IAtan2(2.f * q.v.x * q.w - 2.f * q.v.y * q.v.z, -sqx + sqy - sqz + sqw);   // Roll
+            }
 
-                            return /*NormalizeAngles*/(IVector3D<T>(roll,pitch,yaw));
-                        }
+            //                   pitch =  atan2(2*(v.y*v.z + w*v.x), w*w - v.x*v.x - v.y*v.y + v.z*v.z);
+            //                   yaw =  asin(-2*(v.x*v.z - w*v.y));
+            //                   roll = atan2(2*(v.x*v.y + w*v.z), w*w + v.x*v.x - v.y*v.y - v.z*v.z);
+
+            return /*NormalizeAngles*/(IVector3D<T>(roll,pitch,yaw));
+        }
+
+
+
+                    //                 /// Quaternion using Euler angles
+                    //                 SIMD_INLINE IVector3D<T> GetEulerAngles2() const
+                    //                 {
+                    //                     // Euler angles in radians
+                    //                     T pitch;
+                    //                     T yaw;
+                    //                     T roll;
+
+                    //                     IQuaternion<T> q(*this);
+
+                    //                     T sqw = q.w * q.w;
+                    //                     T sqx = q.v.x * q.v.x;
+                    //                     T sqy = q.v.y * q.v.y;
+                    //                     T sqz = q.v.z * q.v.z;
+
+                    //                     // If quaternion is normalised the unit is one, otherwise it is the correction factor
+                    //                     T unit = sqx + sqy + sqz + sqw;
+                    //                     T val = q.v.x * q.v.y + q.v.z * q.w;
+
+                    //                     if (val > T(0.4999) * unit)                                // 0.4999f OR 0.5f - EPSILON
+                    //                     {
+                    //                         // Singularity at north pole
+                    //                         pitch = 2.f * IAtan2(q.v.x, q.w);          // Yaw
+                    //                         yaw = M_PI * 0.5f;                         // Pitch
+                    //                         roll = 0.f;                                // Roll
+                    //                     }
+                    //                     else if (val < -T(0.4999) * unit)                          // -0.4999f OR -0.5f + EPSILON
+                    //                     {
+                    //                         // Singularity at south pole
+                    //                         pitch = -2.f * IAtan2(q.v.x, q.w);         // Yaw
+                    //                         yaw = -M_PI * 0.5f;                        // Pitch
+                    //                         roll = 0.f;                                // Roll
+                    //                     }
+                    //                     else
+                    //                     {
+                    //                         pitch = IAtan2(2.f * q.v.y * q.w - 2.f * q.v.x * q.v.z,  sqx - sqy - sqz + sqw);   // Yaw
+                    //                         yaw   = IASin(2.f * val / unit);                                                   // Pitch
+                    //                         roll  = IAtan2(2.f * q.v.x * q.w - 2.f * q.v.y * q.v.z, -sqx + sqy - sqz + sqw);   // Roll
+                    //                     }
+
+                    // //                   pitch =  atan2(2*(v.y*v.z + w*v.x), w*w - v.x*v.x - v.y*v.y + v.z*v.z);
+                    // //                   yaw =  asin(-2*(v.x*v.z - w*v.y));
+                    // //                   roll = atan2(2*(v.x*v.y + w*v.z), w*w + v.x*v.x - v.y*v.y - v.z*v.z);
+
+                    //                     return /*NormalizeAngles*/(IVector3D<T>(roll,pitch,yaw));
+                    //                 }
 
         /**
         /// Quaternion using Euler angles
