@@ -8,6 +8,8 @@ C++, Simulation-Physics , ROS
 $ sudo apt-get install freeglut3 freeglut3-dev libglew-dev
 ```
 
+![Documentation-Maths-Model](https://drive.google.com/file/d/1vnBCKneb_Uul7PrCeuDM9b7GgOLJEZJV/view)
 
-# Documentation : [Documentation-Link]([https://daniilshat.ru/](https://drive.google.com/file/d/1vnBCKneb_Uul7PrCeuDM9b7GgOLJEZJV/view)https://drive.google.com/file/d/1vnBCKneb_Uul7PrCeuDM9b7GgOLJEZJV/view)  
+
+
 
