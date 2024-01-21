@@ -124,12 +124,16 @@ void GLWidget_Quadrocopter::renderText()
 
     mOpenGLRenderText.print( 20 /* xpos */, mHeight - 30 /* ypos */, buff);
 
+    //--------------------------------------------------------------------------//
+
     snprintf(&buff[0], sizeof(buff), "set position:| X:%.2f | Y:%.2f | Z:%.2f \n",
               m_PositionStability.x,
               m_PositionStability.y,
               m_PositionStability.z);
 
-    mOpenGLRenderText.print( 20 /* xpos */, mHeight - 60 /* ypos */, 0, buff);
+    mOpenGLRenderText.print( 250 /* xpos */, mHeight - 30 /* ypos */, 0, buff);
+
+    //--------------------------------------------------------------------------//
 
     Vector3 velocity = m_QuadroDynamica->PhysicsBody_Base()->GetLinearVelocity();
     buff[0] = {0};
@@ -138,7 +142,29 @@ void GLWidget_Quadrocopter::renderText()
     velocity.y,
     velocity.z);
 
-    mOpenGLRenderText.print( 20 /* xpos */, mHeight - 90 /* ypos */, 0, buff);
+    mOpenGLRenderText.print( 600 /* xpos */, mHeight - 30 /* ypos */, 0, buff);
+
+    //--------------------------------------------------------------------------//
+
+    Vector3 angular = m_QuadroDynamica->PhysicsBody_Base()->GetAngularVelocity();
+    buff[0] = {0};
+    snprintf(&buff[0], sizeof(buff), "angular velocity:| X:%.2f | Y:%.2f | Z:%.2f \n",
+             angular.x,
+             angular.y,
+             angular.z);
+
+    mOpenGLRenderText.print( 950 /* xpos */, mHeight - 30 /* ypos */, 0, buff);
+
+    // //--------------------------------------------------------------------------//
+
+    Vector3 position = m_QuadroDynamica->PhysicsBody_Base()->GetTransform().GetPosition();
+    buff[0] = {0};
+    snprintf(&buff[0], sizeof(buff), "Real Position:| X:%.2f | Y:%.2f | Z:%.2f \n",
+             position.x,
+             position.y,
+             position.z);
+
+    mOpenGLRenderText.print(  1350.f /* xpos */, mHeight - 30 /* ypos */ , buff);
 
     glPopMatrix();
 }

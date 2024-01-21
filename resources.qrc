@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/fonts/ZenDots-Regular.ttf</file>
+        <file>resources/fonts/NewWishes.ttf</file>
     </qresource>
 </RCC>

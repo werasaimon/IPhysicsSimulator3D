@@ -42,6 +42,18 @@ public:
      void on_checkBox_Roll_toggled(bool checked);
 
      void on_pushButton_ClearChart_clicked();
+\
+     void on_checkBox_VelocityY_toggled(bool checked);
+
+     void on_checkBox_VelocityZ_toggled(bool checked);
+
+     void on_checkBox_VelocityX_toggled(bool checked);
+
+     void on_checkBox_AngularX_toggled(bool checked);
+
+     void on_checkBox_AngularY_toggled(bool checked);
+
+     void on_checkBox_AngularZ_toggled(bool checked);
 
  private:
 

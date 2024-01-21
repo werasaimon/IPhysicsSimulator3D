@@ -38,18 +38,54 @@
     </item>
     <item row="1" column="0">
      <widget class="QSplitter" name="splitter_3">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>90</width>
+        <height>90</height>
+       </size>
+      </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
       <widget class="QSplitter" name="splitter_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>60</height>
+        </size>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
        <widget class="QSplitter" name="splitter">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>90</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
         <widget class="GLWidget_Quadrocopter" name="label_opengl">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Render</string>
          </property>
@@ -64,8 +100,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>974</width>
-           <height>514</height>
+           <width>205</width>
+           <height>262</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout">
@@ -186,24 +222,70 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QCheckBox" name="checkBox_4">
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QCheckBox" name="checkBox_AngularX">
             <property name="text">
-             <string>CheckBox</string>
+             <string>Angular_X</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QCheckBox" name="checkBox_AngularY">
+            <property name="text">
+             <string>Angular_Y</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QCheckBox" name="checkBox_AngularZ">
+            <property name="text">
+             <string>Angular_Z</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_3">
-            <property name="text">
-             <string>CheckBox</string>
+           <widget class="Line" name="line_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QCheckBox" name="checkBox_2">
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QCheckBox" name="checkBox_VelocityX">
             <property name="text">
-             <string>CheckBox</string>
+             <string>Velocity_X</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QCheckBox" name="checkBox_VelocityY">
+            <property name="text">
+             <string>Velocity_Y</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QCheckBox" name="checkBox_VelocityZ">
+            <property name="text">
+             <string>Velocity_Z</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -219,6 +301,9 @@
             <property name="text">
              <string>Pitch</string>
             </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item alignment="Qt::AlignHCenter">
@@ -226,12 +311,18 @@
             <property name="text">
              <string>Yaw</string>
             </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item alignment="Qt::AlignHCenter">
            <widget class="QCheckBox" name="checkBox_Roll">
             <property name="text">
              <string>Roll</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
