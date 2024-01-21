@@ -14,12 +14,12 @@ void IQuadrocopterDynamica::Init(GLWidget *_globalScene_)
     auto _scene_ = _globalScene_->CScene();
 
     //---------------------------------------------------------------------//
-
-    Vector3 pos = Vector3(0,10,0);
-    mDynamicPoints[0] = Vector3(-10, 0,-10) * 0.95f;
-    mDynamicPoints[1] = Vector3( 10, 0,-10) * 0.95f;
-    mDynamicPoints[2] = Vector3( 10, 0, 10) * 0.95f;
-    mDynamicPoints[3] = Vector3(-10, 0, 10) * 0.95f;
+    scalar size = 10;
+    Vector3 pos = Vector3(0,size,0);
+    mDynamicPoints[0] = Vector3(-size, 0,-size) * 0.95f;
+    mDynamicPoints[1] = Vector3( size, 0,-size) * 0.95f;
+    mDynamicPoints[2] = Vector3( size, 0, size) * 0.95f;
+    mDynamicPoints[3] = Vector3(-size, 0, size) * 0.95f;
 
 
     Transform base_trans(pos);
@@ -29,6 +29,7 @@ void IQuadrocopterDynamica::Init(GLWidget *_globalScene_)
     Vector3 extendet(5,1,5);
     MeshGenerator::CuboidDescriptor desc_base(extendet);
     IComponentMesh *base_mesh = new IComponentMesh(desc_base);
+    base_mesh->SetTransform(base_trans);
     auto  collider_base = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(extendet));
     base_mesh->setCollider(collider_base);
     _scene_->AddComponent( base_mesh );
@@ -36,9 +37,9 @@ void IQuadrocopterDynamica::Init(GLWidget *_globalScene_)
 
     Vector3 Volume_0(mDynamicPoints[0].Length(),1,1);
     MeshGenerator::CuboidDescriptor desc_shoulder_0(Volume_0);
-    IComponentMesh *shoulder_mesh_0 = new IComponentMesh(desc_shoulder_0);
     Transform transform_shoulder_0(mDynamicPoints[0] / 2.f, Quaternion::FromAngleAxis(Vector3::Y,IMath::IDegreesToRadians(-45.f)));
-    shoulder_mesh_0->SetTransform(transform_shoulder_0);
+    IComponentMesh *shoulder_mesh_0 = new IComponentMesh(desc_shoulder_0);
+    shoulder_mesh_0->SetTransform(base_trans * transform_shoulder_0);
     auto collider_shoulder_0 = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(Volume_0),transform_shoulder_0);
     shoulder_mesh_0->setCollider(collider_shoulder_0);
     _scene_->AddComponent( shoulder_mesh_0 );
@@ -48,7 +49,7 @@ void IQuadrocopterDynamica::Init(GLWidget *_globalScene_)
     MeshGenerator::CuboidDescriptor desc_shoulder_1(Volume_1);
     IComponentMesh *shoulder_mesh_1 = new IComponentMesh(desc_shoulder_1);
     Transform transform_shoulder_1(mDynamicPoints[1]/ 2.f , Quaternion::FromAngleAxis(Vector3::Y,IMath::IDegreesToRadians(45.f)));
-    shoulder_mesh_1->SetTransform(transform_shoulder_1);
+    shoulder_mesh_1->SetTransform(base_trans * transform_shoulder_1);
     auto collider_shoulder_1 = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(Volume_1),transform_shoulder_1);
     shoulder_mesh_1->setCollider(collider_shoulder_1);
     _scene_->AddComponent( shoulder_mesh_1 );
@@ -58,7 +59,7 @@ void IQuadrocopterDynamica::Init(GLWidget *_globalScene_)
     MeshGenerator::CuboidDescriptor desc_shoulder_2(Volume_2);
     IComponentMesh *shoulder_mesh_2 = new IComponentMesh(desc_shoulder_2);
     Transform transform_shoulder_2(mDynamicPoints[2]/ 2.f , Quaternion::FromAngleAxis(Vector3::Y,IMath::IDegreesToRadians(-45.f)));
-    shoulder_mesh_2->SetTransform(transform_shoulder_2);
+    shoulder_mesh_2->SetTransform(base_trans * transform_shoulder_2);
     auto collider_shoulder_2 = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(Volume_2),transform_shoulder_2);
     shoulder_mesh_2->setCollider(collider_shoulder_2);
     _scene_->AddComponent( shoulder_mesh_2 );
@@ -68,7 +69,7 @@ void IQuadrocopterDynamica::Init(GLWidget *_globalScene_)
     MeshGenerator::CuboidDescriptor desc_shoulder_3(Volume_3);
     IComponentMesh *shoulder_mesh_3 = new IComponentMesh(desc_shoulder_3);
     Transform transform_shoulder_3(mDynamicPoints[3]/ 2.f , Quaternion::FromAngleAxis(Vector3::Y,IMath::IDegreesToRadians(45.f)));
-    shoulder_mesh_3->SetTransform(transform_shoulder_3);
+    shoulder_mesh_3->SetTransform(base_trans * transform_shoulder_3);
     auto collider_shoulder_3 = mRigidBody_Base->AddCollider(_physics__instruments_->CCreateBoxShape(Volume_3),transform_shoulder_3);
     shoulder_mesh_3->setCollider(collider_shoulder_3);
     _scene_->AddComponent( shoulder_mesh_3 );
@@ -76,7 +77,6 @@ void IQuadrocopterDynamica::Init(GLWidget *_globalScene_)
     //---//
 
      mRigidBody_Base->InitTypePhysics(rp3d::BodyType::DYNAMIC);
-
 
     //---------------------------------------------------------------------//
 
@@ -95,11 +95,11 @@ void IQuadrocopterDynamica::RenderDebug()
     draw_sphere(transform * mDynamicPoints[2] , 0.5f , Vector3(0,0,1));
     draw_sphere(transform * mDynamicPoints[3] , 0.5f , Vector3(1,1,0));
 
-    scalar size = 4;
-    draw_line(transform * mDynamicPoints[0], transform * mDynamicPoints[0] + Vector3::Y * size * m_W[0], Vector3(1,0,0));
-    draw_line(transform * mDynamicPoints[1], transform * mDynamicPoints[1] + Vector3::Y * size * m_W[1], Vector3(0,1,0));
-    draw_line(transform * mDynamicPoints[2], transform * mDynamicPoints[2] + Vector3::Y * size * m_W[2], Vector3(0,0,1));
-    draw_line(transform * mDynamicPoints[3], transform * mDynamicPoints[3] + Vector3::Y * size * m_W[3], Vector3(1,1,0));
+    scalar size_shift = 4;
+    draw_line(transform * mDynamicPoints[0], transform * mDynamicPoints[0] + Vector3::Y * size_shift * m_W[0], Vector3(1,0,0));
+    draw_line(transform * mDynamicPoints[1], transform * mDynamicPoints[1] + Vector3::Y * size_shift * m_W[1], Vector3(0,1,0));
+    draw_line(transform * mDynamicPoints[2], transform * mDynamicPoints[2] + Vector3::Y * size_shift * m_W[2], Vector3(0,0,1));
+    draw_line(transform * mDynamicPoints[3], transform * mDynamicPoints[3] + Vector3::Y * size_shift * m_W[3], Vector3(1,1,0));
 
     Vector3 position = mRigidBody_Base->GetTransform().GetPosition();
     draw_sphere(position , 0.75f , Vector3(1,1,1));
@@ -113,7 +113,7 @@ void IQuadrocopterDynamica::UpdatePosition(const Vector3& _PositionStability)
 void IQuadrocopterDynamica::UpdateAngle(const Vector3 &_angle)
 {
    Vector3 stab_moment;
-   UpdateStabilizationAngle(stab_moment,_angle,1.f/60.f);
+    UpdateStabilizationAngle(stab_moment,_angle,1.f/60.f);
 }
 
 
@@ -334,7 +334,7 @@ void IQuadrocopterDynamica::UpdateStabilizationControlPosition(const Vector3 &ex
 
 //========================================================================================================//
 
-IComponentRigidBody *IQuadrocopterDynamica::PhysicsBody() const
+IComponentRigidBody *IQuadrocopterDynamica::PhysicsBody_Base() const
 {
     return mRigidBody_Base;
 }

@@ -7,6 +7,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QAreaSeries>
+#include <QMap>
 
 class Chart_Widget : public QChartView
 {
@@ -20,28 +21,18 @@ public:
         qDebug() << str;
     }
 
-// protected:
-//     void wheelEvent(QWheelEvent *event) override
-//     {
-//         // Изменяем масштаб графика в зависимости от направления прокрутки колеса мыши
-//         int delta = event->angleDelta().y();
-//         if (delta > 0)
-//             m_Chart->zoomIn();
-//         else
-//             m_Chart->zoomOut();
+    void addSeries(QString name, QLineSeries* series);
+    void setSeriesVisibility(QString name, bool isVisible);
+    void clearAllSeries();
+    void clearChart();
 
-//         QChartView::wheelEvent(event);
-//     }
-
-//private:
 public:
 
     uint16_t max_plot_length;
 
     QChart *m_Chart;
-    QLineSeries* m_Series1;
-    QLineSeries* m_Series2;
-    QLineSeries* m_Series3;
+    QMap<QString, QLineSeries*> m_Series;
 };
+
 
 #endif // CHART_WIDGET_H

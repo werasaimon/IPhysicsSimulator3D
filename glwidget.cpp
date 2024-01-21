@@ -60,7 +60,7 @@ void GLWidget::initializeGL()
     //===================================//
 
 
-    m_SceneDescriptor.m_IsDrawFill = false;
+    m_SceneDescriptor.m_IsDrawFill = true;
     m_SceneDescriptor.m_IsDrawLines = true;
     m_SceneDescriptor.m_IsDynamics = false;
 
@@ -101,6 +101,7 @@ void GLWidget::initializeGL()
 
 
     //---------------------------------------------------------//
+
 }
 
 
@@ -121,16 +122,19 @@ void GLWidget::resizeGL( int w , int h )
 
 void GLWidget::paintGL()
 {
+
     glCullFace(GL_BACK);
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, mWidth, mHeight);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+
+
     m_CCamera->LookAt();
 //    m_CCamera->Update();
 
-    glLoadIdentity();
+     glLoadIdentity();
     glMatrixMode(GL_PROJECTION);
     glLoadMatrixf(m_CCamera->Camera()->ProjectionMatrix());
 
@@ -150,7 +154,7 @@ void GLWidget::paintGL()
             }
         }
 
-        if(m_CScene->Descriptor().m_IsDrawLines)
+        if(m_CScene->Descriptor().m_IsDrawLines == true)
         {
             if(it->Type() == TYPE_COMPONENT::MESH_MODEL)
             {
@@ -159,7 +163,7 @@ void GLWidget::paintGL()
             }
         }
 
-        if(m_CScene->Descriptor().m_IsDrawFill)
+        if(m_CScene->Descriptor().m_IsDrawFill == true)
         {
             if(it->Type() == TYPE_COMPONENT::MESH_MODEL)
             {
@@ -168,6 +172,9 @@ void GLWidget::paintGL()
             }
         }
     }
+
+    //---------------------------------------------------------------//
+
 
 
     //---------------------------------------------------------------//
@@ -200,6 +207,8 @@ void GLWidget::paintGL()
     //    }
 
     //---------------------------------------------------------------//
+
+    //glFlush();
 }
 
 void GLWidget::update_scene()
@@ -323,6 +332,11 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *e)
 
 void GLWidget::closeEvent(QCloseEvent *event)
 {
+    if(m_PhysicsWorld)
+    {
+        delete m_PhysicsWorld;
+        m_PhysicsWorld = nullptr;
+    }
     event->accept();
 }
 

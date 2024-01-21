@@ -7,7 +7,12 @@ CONFIG += c++17
 
 # LIBS += -L/usr/local/lib -lSDL2
 # LIBS += -L/usr/local/lib -lSDL2 -ldl -lpthread
-# INCLUDEPATH += /usr/local/include
+# INCLUDEPATH += /usr/local/include\
+
+LIBS += -L/usr/lib/x86_64-linux-gnu -lfreetype
+INCLUDEPATH += /usr/include/freetype2
+
+# sudo apt-get install libfreetype-dev libfreetype6 libfreetype6-dev
 
 CONFIG += resources_big
 DEFINES += ENABLE_STL_SUPPORT
@@ -171,6 +176,7 @@ SOURCES += \
     IEngineComponent/IScene.cpp \
     IQuadrocopterDynamica.cpp \
     OpenGL/OpenGLRender.cpp \
+    OpenGL/OpenGLTextRender.cpp \
     OpenGL/geometry_opengl.cpp \
     OpenGL_Render_Interface.cpp \
     Sensors/IEncoderSensor.cpp \
@@ -354,6 +360,7 @@ HEADERS += \
     IEngineComponent/IScene.h \
     IQuadrocopterDynamica.h \
     OpenGL/OpenGLRender.h \
+    OpenGL/OpenGLTextRender.h \
     OpenGL/geometry_opengl.h \
     OpenGL_Render_Interface.h \
     Sensors/IEncoderSensor.h \
@@ -373,3 +380,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc

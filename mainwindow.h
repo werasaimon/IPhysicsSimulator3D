@@ -29,6 +29,19 @@ public:
      void update_timer();
 
      void on_pushButton_Simulate_clicked();
+     void on_horizontalSlider_V1_valueChanged(int value);
+     void on_horizontalSlider_V2_valueChanged(int value);
+     void on_doubleSpinBox_v1_editingFinished();
+
+     void on_doubleSpinBox_V2_editingFinished();
+
+     void on_checkBox_Pitch_toggled(bool checked);
+
+     void on_checkBox_Yaw_toggled(bool checked);
+
+     void on_checkBox_Roll_toggled(bool checked);
+
+     void on_pushButton_ClearChart_clicked();
 
  private:
 

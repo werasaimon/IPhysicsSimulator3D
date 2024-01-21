@@ -5,6 +5,14 @@
 #include "glwidget.h"
 #include "IQuadrocopterDynamica.h"
 
+#include <../OpenGL/OpenGLTextRender.h>
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
+
+using namespace glfreetype;
+
 class GLWidget_Quadrocopter : public GLWidget
 {
     Q_OBJECT
@@ -20,6 +28,9 @@ public:
 
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
+    void closeEvent(QCloseEvent *event);
+
+    void renderText();
 
     IQuadrocopterDynamica *QuadroDynamica() const;
 
@@ -29,12 +40,30 @@ public:
 
 private:
 
+
+
+    font_data mOpenGLRenderText;
+
+    //-----------------------------------//
+
     IQuadrocopterDynamica *m_QuadroDynamica;
 
     //-----------------------------------//
 
     Vector3 m_PositionStability;
     Vector3 m_AngleStability;
+
+    void DisplayText(int x, int y, int pixelSize, const char* text, ...)
+    {
+        char buf[512];
+        va_list ap;
+        va_start(ap, text);
+        vsprintf(buf, text, ap);
+        va_end(ap);
+
+        mOpenGLRenderText.print(x, y - 20, buf);
+
+    }
 
 };
 
